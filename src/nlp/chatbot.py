@@ -1,6 +1,10 @@
 # chatbot classes and configurations
 # This module contains classes and configurations for a simple chatbot simulation.
 
+#from re import S
+import requests
+#import keyboard
+
 class ChatbotConfig:
     """Configuration for the chatbot."""
 
@@ -41,7 +45,8 @@ class ChatbotConfig:
             raise ValueError ("Temperature must be between 0 and 1")
         if top_p < 0 or top_p > 1:
             raise ValueError ("Top_p must be between 0 and 1") 
-                             
+
+    # Initialize the chatbot configuration                
         self.author = author # Author of the configuration
         self.annotations = [] # Annotations for the configuration
         self.doc = docstring # Documentation for the configuration
@@ -76,7 +81,7 @@ class ChatbotConfig:
                  
 
 class Chatbot:
-    """A Simple chatbot class simulation."""
+    """A Simple chatbot class."""
 
     """Attributes:"""
     def __init__ (self, config: ChatbotConfig):
@@ -87,7 +92,7 @@ class Chatbot:
         self.author = "Your Name" # Author of the chatbot
         self.status = "Initialized" # Status of the chatbot;
         self.qualname = "SimpleChatbot" # Qualified name of the chatbot
-        self.response = None # Placeholder for the chatbot's response
+        self.response = None # Placeholder for the chatbot's responsex
         self.model = config.model # The model to use for the chatbot 
         self.temperature = config.temperature # Sampling temperature for response generation
         self.top_p = config.top_p # Nucleus sampling parameter
@@ -112,8 +117,64 @@ class Chatbot:
              "top_p": self.top_p,
              "version": self.version,
         }
-class ChatbotPrompt:
 
+def get_definition(self, word: str):
+    """
+    Retrieve the definition of a word from a dicitionary API. 
+
+    Args:
+       word (str): The word to define.
+
+    Returns:
+       str: The definition of the word or an error message if not found.
+    """
+    if not word:
+     return " Please provide a word to look up."
+    
+    #API Call to dictionary service
+    api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+
+def handle_input(self, user_input: str):
+    """
+    Handle user input and determine the appropriate action.
+
+    Args:
+        user_input (str): Users input
+
+    Returns:
+    
+    """
+
+    if user_input.lower() in ['exit', 'quit', 'stop']:
+        return "A.R.I.E.L. is shutting down."
+    elif user_input.lower() == "tell me about hal-9000":
+        return "I'm sorry...It's too  sad to talk about HAL-9000. I cannot do that...Dave. @==(^_^@)"
+    elif user_input.lower().startswith("define:"):
+        #Extract the word to define
+        word = user_input[len("define:"):].strip()
+        return self.get_definition(word)
+    else:
+        # Generate a response for other inputs
+        return self.generate_response(user_input)
+    
+    
+    try:
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+             # Extract the first definition from the response
+            definition = data[0]['meanings'][0]['definitions'][0]['definition']
+            return f"Definition of '{word}': {definition}"
+        elif response.status_code == 404: 
+            # word not found
+            return f"Word '{word}' not found in the dictionary."
+        else:
+            return f"Error: Unable to retrie definition. (Status code: {response.status_code})."
+    except requests.RequestException as e:
+        return f"Error: Unable to connect to the dicitionary API. Detyails: {e}"        
+
+
+class ChatbotPrompt:
     
     """Prompts user for word to search"""
     
