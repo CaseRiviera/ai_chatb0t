@@ -12,7 +12,6 @@ class ChatbotConfig:
     max_tolerance (float): Maximum tolerance for response generation.
     """
 
-
     # Default parameters for the chatb0t mk I 
     def __init__(self, 
                  annotations = None,  
@@ -88,8 +87,8 @@ class Chatbot:
         self.author = "Your Name" # Author of the chatbot
         self.status = "Initialized" # Status of the chatbot;
         self.qualname = "SimpleChatbot" # Qualified name of the chatbot
-        self.response = None # 
-        self.model = config.model # The model to use for the chatbot # Placeholder for the chatbot's response
+        self.response = None # Placeholder for the chatbot's response
+        self.model = config.model # The model to use for the chatbot 
         self.temperature = config.temperature # Sampling temperature for response generation
         self.top_p = config.top_p # Nucleus sampling parameter
         self.max_tokens = config.max_tokens # Maximum number of tokens for the response
@@ -114,6 +113,7 @@ class Chatbot:
              "version": self.version,
         }
 class ChatbotPrompt:
+
     
     """Prompts user for word to search"""
     
@@ -222,22 +222,22 @@ class ChatbotRuntimeErrorDebug(ChatbotRuntimeError):
            "max_tolerance": None,
            "history": history, # Default to an empty list if history is None
         }
-        if history is None:
-            self.history = []
-        else:
-            self.history = history
-            self.debug_info = {
-                "model": None,
-                "temperature": None,
-                "top_p": None,
-                "max_tokens": None,
-                "max_tolerance": None,
-                "history": self.history,
-                "error": None,
-                "error_code": None,
-            }
+       if history is None:
+           self.history = []
+       else:
+           self.history = history
+       self.debug_info = {
+           "model": None,
+           "temperature": None,
+           "top_p": None,
+           "max_tokens": None,
+           "max_tolerance": None,
+           "history": self.history,
+           "error": None,
+           "error_code": None,
+       }
 
-try: 
-      raise ChatbotRuntimeError("An error occurred", error_code=404)
-except ChatbotRuntimeError as e:
-      print(e)
+#ry: 
+#      raise ChatbotRuntimeError("An error occurred", error_code=404)
+#except ChatbotRuntimeError as e:
+#      print(e)
