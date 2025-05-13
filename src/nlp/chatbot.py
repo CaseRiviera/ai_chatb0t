@@ -134,6 +134,22 @@ def get_definition(self, word: str):
     #API Call to dictionary service
     api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
 
+    try:        
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+             # Extract the first definition from the response
+            definition = data[0]['meanings'][0]['definitions'][0]['definition']
+            return f"Definition of '{word}': {definition}"
+        elif response.status_code == 404: 
+            # word not found
+            return f"Word '{word}' not found in the dictionary."
+        else:
+            return f"Error: Unable to retrie definition. (Status code: {response.status_code})."
+    except requests.RequestException as e:
+        return f"Error: Unable to connect to the dicitionary API. Detyails: {e}"
+    
+
 def handle_input(self, user_input: str):
     """
     Handle user input and determine the appropriate action.
@@ -157,21 +173,6 @@ def handle_input(self, user_input: str):
         # Generate a response for other inputs
         return self.generate_response(user_input)
     
-    
-    try:
-        response = requests.get(api_url)
-        if response.status_code == 200:
-            data = response.json()
-             # Extract the first definition from the response
-            definition = data[0]['meanings'][0]['definitions'][0]['definition']
-            return f"Definition of '{word}': {definition}"
-        elif response.status_code == 404: 
-            # word not found
-            return f"Word '{word}' not found in the dictionary."
-        else:
-            return f"Error: Unable to retrie definition. (Status code: {response.status_code})."
-    except requests.RequestException as e:
-        return f"Error: Unable to connect to the dicitionary API. Detyails: {e}"        
 
 
 class ChatbotPrompt:

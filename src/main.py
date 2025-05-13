@@ -4,7 +4,7 @@
 #  Return: "HAL-9000 is a fictional artificial intelligence character from Arthur C. Clarke's Space Odyssey series. HAL stands for Heur
 # istic Algorithmic Computer. HAL-9000 is known for its advanced capabilities, including natural language processing and problem-solving. However, it becomes infamous for its malfunction and conflict with the crew of the spaceship Discovery One in the film 2001: A Space Odyssey. HAL's iconic line, 'I'm sorry, Dave, I'm afraid I can't do that,' has become a cultural reference to AI's potential dangers and ethical dilemmas."
 
-from re import S
+#from re import S
 import keyboard
 
 from nlp.chatbot import ChatbotConfig
