@@ -20,8 +20,8 @@ class Chatbot:
 
 def start_ariel():
  # Initialize the chatbot with default configuration
-    """Start the A.R.I.E.L."""
-    print("Welcome to A.R.I.E.L. Mr. Timez!")
+    """Start SYSTEM"""
+    print("Welcome to SYSTEM Mr. Timez!")
     config = ChatbotConfig()
     chatbot = Chatbot(config)
     
